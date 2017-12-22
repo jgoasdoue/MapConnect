@@ -2,7 +2,6 @@
 using System;
 using System.Data.SqlClient;
 using System.Web.Mvc;
-using System.Web.Security;
 
 namespace ProjetPersoTest.Controllers
 {
@@ -82,11 +81,12 @@ namespace ProjetPersoTest.Controllers
 
         public ActionResult Map()
         {
+            ViewBag.isConnected = isConnected;
             if (isConnected == true)
             {
                 return View("Map");
             }
-            return RedirectToAction("Connexion");//return View("Connexion");
+            return RedirectToAction("Connexion");
         }
     }
 }
