@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "Connexion";
+}
+
+<h2>Page de connexion</h2>
+<br />
+@using (Html.BeginForm()){
+    @ViewData["Message"];
+    <p>Nom d'utilisateur: <input type="text" name="user" /></p>
+    <p>Mot de passe: <input type="password" name="password" /></p>
+    <input type="submit" value="Se connecter" />
+    <br />
+}
