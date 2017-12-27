@@ -14,3 +14,11 @@ ProjetPersoTest/obj/Debug/MapConnect.csproj.CoreCompileInputs.cache
 .vs/MapConnect/v15/Server/sqlite3/storage.ide-shm
 ProjetPersoTest/obj/Debug/DesignTimeResolveAssemblyReferences.cache
 .vs/MapConnect/v15/Server/sqlite3/storage.ide
+ProjetPersoTest/bin/roslyn/vbc.exe.config
+ProjetPersoTest/bin/roslyn/vbc.exe
+ProjetPersoTest/bin/roslyn/VBCSCompiler.exe.config
+ProjetPersoTest/bin/roslyn/VBCSCompiler.exe
+ProjetPersoTest/bin/roslyn/csi.exe.config
+ProjetPersoTest/bin/roslyn/csi.exe
+ProjetPersoTest/bin/roslyn/csc.exe.config
+ProjetPersoTest/bin/roslyn/csc.exe
