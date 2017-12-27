@@ -34,6 +34,7 @@ html, body, #map {
     max-width:none!important;
 }
 
+/* Mets en forme le titre de l'appli */
 #app-title {
     float: left;
     font-size: 18px;
