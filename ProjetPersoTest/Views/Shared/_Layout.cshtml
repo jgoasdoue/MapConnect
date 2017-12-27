@@ -10,7 +10,8 @@
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
     <link rel="stylesheet" href="~/Content/leaflet.css" />
     <script src="~/Scripts/leaflet.js"></script>
-
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -37,11 +38,8 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>Map Connect - @DateTime.Now.Year </p>
         </footer>
     </div>
-
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
 </body>
 </html>

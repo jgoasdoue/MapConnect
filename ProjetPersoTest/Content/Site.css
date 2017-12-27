@@ -32,6 +32,7 @@ html, body, #map {
 /* Supprime la largeur maximale des conteneurs */
 .container {
     max-width:none!important;
+    max-height:100%;
 }
 
 #app-title {
