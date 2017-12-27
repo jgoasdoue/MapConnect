@@ -22,3 +22,14 @@ ProjetPersoTest/bin/roslyn/csi.exe.config
 ProjetPersoTest/bin/roslyn/csi.exe
 ProjetPersoTest/bin/roslyn/csc.exe.config
 ProjetPersoTest/bin/roslyn/csc.exe
+ProjetPersoTest/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+ProjetPersoTest/bin/roslyn/Microsoft.VisualBasic.Core.targets
+ProjetPersoTest/bin/roslyn/Microsoft.DiaSymReader.Native.x86.dll
+ProjetPersoTest/bin/roslyn/Microsoft.DiaSymReader.Native.amd64.dll
+ProjetPersoTest/bin/roslyn/Microsoft.CodeAnalysis.dll
+ProjetPersoTest/bin/roslyn/Microsoft.CodeAnalysis.VisualBasic.dll
+ProjetPersoTest/bin/roslyn/Microsoft.CodeAnalysis.Scripting.dll
+ProjetPersoTest/bin/roslyn/Microsoft.CodeAnalysis.CSharp.dll
+ProjetPersoTest/bin/roslyn/Microsoft.CodeAnalysis.CSharp.Scripting.dll
+ProjetPersoTest/bin/roslyn/Microsoft.CSharp.Core.targets
+ProjetPersoTest/bin/roslyn/Microsoft.Build.Tasks.CodeAnalysis.dll
