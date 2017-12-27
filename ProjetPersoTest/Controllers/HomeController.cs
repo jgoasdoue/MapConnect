@@ -11,7 +11,9 @@ namespace ProjetPersoTest.Controllers
 
         private IDal dal = new Dal();
 
-        // GET: Home
+        /**
+         * Permet d'afficher la page Index.cshtml si l'utilisateur est connecté, sinon renvoie sur la page de connexion (Connexion.cshtml)
+         */
         public ActionResult Index()
         {
             ViewBag.isConnected = isConnected;
@@ -23,6 +25,9 @@ namespace ProjetPersoTest.Controllers
             return View("Index");
         }
 
+        /**
+         * Permet d'afficher la page de connexion (Connexion.cshtml) si l'utilisateur est déconnecté, sinon renvoie sur la page Index.cshtml
+         */
         public ActionResult Connexion()
         {
             ViewBag.isConnected = isConnected;
@@ -34,6 +39,9 @@ namespace ProjetPersoTest.Controllers
             return View("Connexion");
         }
 
+        /**
+         * Vérifie le contenu des champs user et password entrés par l'utilisateur et les compare avec la base pour connecter ou non l'utilisateur
+         */
         [HttpPost]
         public ActionResult Connexion(object sender, EventArgs e)
         {
@@ -72,6 +80,9 @@ namespace ProjetPersoTest.Controllers
             return Connexion();
         }
 
+        /**
+         * Permet de se déconnecter et de revenir sur la page de connexion (Connexion.cshtml)
+         */
         public ActionResult Deconnexion()
         {
             isConnected= false;
@@ -79,6 +90,9 @@ namespace ProjetPersoTest.Controllers
             return View("Deconnexion");
         }
 
+        /**
+         * Permet d'afficher la page Map.cshtml si l'utilisateur est connecté, sinon renvoie sur la page de connexion (Connexion.cshtml)
+         */
         public ActionResult Map()
         {
             ViewBag.isConnected = isConnected;

@@ -10,15 +10,20 @@
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
     <link rel="stylesheet" href="~/Content/leaflet.css" />
     <script src="~/Scripts/leaflet.js"></script>
-
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
+                <p class="navbar-text" id="app-title">Map Connect</p>
+                <!-- Condition qui permet de masquer les options du bandeau en haut de la page si l'utilisateur est déconnecté -->
                 @if (ViewBag.isConnected != null && ViewBag.isConnected)
                 {
-                    @Html.ActionLink("Map Connect", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    //Option du bandeau qui permet de revenir à la page d'accueil
+                    @Html.ActionLink("Accueil", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    //Option du bandeau qui permet de se déconnecter
                     @Html.ActionLink("Déconnexion", "Deconnexion", "Home", new { area = "" }, new { @class = "navbar-brand" })
                 }
 
@@ -33,11 +38,8 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>Map Connect - @DateTime.Now.Year </p>
         </footer>
     </div>
-
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
 </body>
 </html>
