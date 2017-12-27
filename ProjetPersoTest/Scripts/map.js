@@ -14,8 +14,6 @@ function onGSLClick(e) {
     this.bindPopup("<b>Gare Saint Lazare</b><br/>Coordinates : (" + e.latlng.lat.toFixed(4) + ", " + e.latlng.lng.toFixed(4) + ")");
 }
 
-
-
 /* On initialiser la carte */
 var map = L.map('map', {
     center: [48.853, 2.35],

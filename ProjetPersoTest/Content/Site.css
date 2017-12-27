@@ -42,11 +42,3 @@ html, body, #map {
     line-height: 20px;
     color: rgba(255, 15, 15, 0.45);
 }
-
-/*.leaflet-popup .mouseover{
-    opacity: 1;
-}
-
-.leaflet-popup {
-    opacity: 0.5
-}*/
