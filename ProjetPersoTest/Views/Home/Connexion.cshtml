@@ -5,10 +5,16 @@
 
 <h2>Page de connexion</h2>
 <br />
-@using (Html.BeginForm()){
+<!-- Crée le formulaire de connexion -->
+@using (Html.BeginForm())
+{
+    //Placeholder pour les messages d'erreur
     @ViewData["Message"];
+    //Champs d'identifiants permettant de s'authentifier sur le site
     <p>Nom d'utilisateur: <input type="text" name="user" /></p>
     <p>Mot de passe: <input type="password" name="password" /></p>
-    <input type="submit" value="Se connecter" />
     <br />
+    //Bouton de connexion
+    <input type="submit" value="Se connecter" />
+
 }
