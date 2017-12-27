@@ -20,3 +20,4 @@ ProjetPersoTest/obj/Debug/DesignTimeResolveAssemblyReferences.cache
 *.lock
 *.ide-wal
 *.ide-shm
+packages/Microsoft.Net.Compilers.2.6.1/tools/Microsoft.Build.Tasks.CodeAnalysis.dll
