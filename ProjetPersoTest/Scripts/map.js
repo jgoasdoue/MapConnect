@@ -36,13 +36,6 @@ function setSliderZoom() {
     $("#slider-zoom").slider('value', map.getZoom());
 }
 
-/* Initialise des spinners pour les champs de latitude et longitude */
-$("#lat, #lng").spinner({
-    step: .001,
-    change: position,
-    stop: position
-});
-
 /* On initialiser la carte */
 var map = L.map('map', {
     center: setLatLong(),
@@ -58,6 +51,7 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 var solutec = L.marker([48.87430545931439, 2.32435405254364]).addTo(map);
 solutec.addEventListener("click", onPopupClick);
 
+/* On crée un objet Gare Saint-Lazare sur la carte */
 var gareSL = L.polygon([
     [48.87585, 2.32394],
     [48.87718, 2.32323],
@@ -70,9 +64,9 @@ var gareSL = L.polygon([
     [48.877, 2.32683],
     [48.8762, 2.32679]
 ]).addTo(map);
-
 gareSL.addEventListener("click", onGSLClick);
 
+/*On crée le slider de zoom */
 $("#slider-zoom").slider({
     min: 0,
     max: 18,
@@ -82,6 +76,28 @@ $("#slider-zoom").slider({
     }
 });
 
+/* On initialise des spinners pour les champs de latitude et longitude */
+$("#lat, #lng").spinner({
+    step: .001,
+    change: position,
+    stop: position
+});
+
+/* On réalise une action au clic, au zoom et au déplacement sur la carte */
 map.addEventListener("click", onMapClick);
 map.addEventListener("move", setSpinnerCoords)
 map.addEventListener("zoomend", setSliderZoom)
+
+// create the geocoding control and add it to the map
+var searchControl = L.esri.Geocoding.geosearch().addTo(map);
+
+// create an empty layer group to store the results and add it to the map
+var results = L.layerGroup().addTo(map);
+
+// listen for the results event and add every result to the map
+searchControl.on("results", function (data) {
+    results.clearLayers();
+    for (var i = data.results.length - 1; i >= 0; i--) {
+        results.addLayer(L.marker(data.results[i].latlng));
+    }
+});
