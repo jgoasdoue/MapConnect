@@ -38,7 +38,14 @@ html, body, #map {
 /* Mets en forme le titre de l'appli */
 #app-title {
     float: left;
-    font-size: 18px;
-    line-height: 20px;
-    color: rgba(255, 15, 15, 0.45);
+}
+
+/* Customisation des spinners de coordonnées */
+.coordinate-spinner {
+    border-radius: 15px;
+    padding-left: 7px;
+}
+
+#slider-zoom {
+    width:95%;
 }

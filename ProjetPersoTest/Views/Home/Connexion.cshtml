@@ -3,18 +3,19 @@
     ViewBag.Title = "Connexion";
 }
 
-<h2>Page de connexion</h2>
-<br />
 <!-- Crée le formulaire de connexion -->
 @using (Html.BeginForm())
 {
-    //Placeholder pour les messages d'erreur
-    @ViewData["Message"];
-    //Champs d'identifiants permettant de s'authentifier sur le site
+<div class="body-content">
+    <h2>Page de connexion</h2>
+    <br />
+    <!--Placeholder pour les messages d'erreur-->
+    @ViewData["Message"]
+    <!--Champs d'identifiants permettant de s'authentifier sur le site-->
     <p>Nom d'utilisateur: <input type="text" name="user" /></p>
     <p>Mot de passe: <input type="password" name="password" /></p>
     <br />
-    //Bouton de connexion
+    <!--Bouton de connexion-->
     <input type="submit" value="Se connecter" />
-
+</div>
 }
