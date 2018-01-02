@@ -125,7 +125,6 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="img\icon_grande.png" />
-    <Content Include="Outils\dotnet-sdk-2.1.2-win-gs-x64.exe" />
     <Content Include="Outils\Git-2.15.1.2-64-bit.exe" />
     <Content Include="Outils\Map-Conect-Logo.png" />
     <Content Include="Outils\Map-Connect-Logo-fond-blanc.png" />
