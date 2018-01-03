@@ -88,13 +88,13 @@ map.addEventListener("click", onMapClick);
 map.addEventListener("moveend", setSpinnerCoords)
 map.addEventListener("zoomend", setSliderZoom)
 
-// create the geocoding control and add it to the map
+/* Crée le géocodeur ESRI pour chercher une adresse et l'ajoute à la carte */
 var searchControl = L.esri.Geocoding.geosearch().addTo(map);
 
-// create an empty layer group to store the results and add it to the map
+/* Crée un groupe de couche vide pour lister les adresses retournées en résultat du géocodeur et l'ajoute à la carte */
 var results = L.layerGroup().addTo(map);
 
-// listen for the results event and add every result to the map
+/* Ajoute les résultats retournés par le géocodeur dans le groupe de couche lorsque le géocodeur les reçoit */
 searchControl.on("results", function (data) {
     results.clearLayers();
     for (var i = data.results.length - 1; i >= 0; i--) {
