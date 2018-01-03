@@ -35,8 +35,8 @@ html, body, #map {
     max-height:100%;
 }
 
-/* Mets en forme le titre de l'appli */
-#app-title {
+/* Mets en place le logo de l'appli */
+#app-icon {
     float: left;
 }
 
@@ -46,6 +46,7 @@ html, body, #map {
     padding-left: 7px;
 }
 
+/* Définit la taille sur slider pour zoomer */
 #slider-zoom {
     width:95%;
 }

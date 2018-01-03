@@ -6,7 +6,7 @@ function onPopupClick(e) {
 /* Fonction qui ajoute une popup au clic sur la carte */
 function onMapClick(e) {
     var popup = L.popup();
-    popup.setLatLng(e.latlng).setContent("You clicked the map at " + e.latlng.toString()).openOn(map);
+    popup.setLatLng(e.latlng).setContent("You clicked the map at (" + e.latlng.lat.toFixed(4) + ", " + e.latlng.lng.toFixed(4) + ")").openOn(map);
 }
 
 /* Fonction qui ajoute une popup au clic sur la géométrie de Gare Saint Lazare */
@@ -66,7 +66,7 @@ var gareSL = L.polygon([
 ]).addTo(map);
 gareSL.addEventListener("click", onGSLClick);
 
-/*On crée le slider de zoom */
+/* On crée le slider de zoom */
 $("#slider-zoom").slider({
     min: 0,
     max: 18,
@@ -85,7 +85,7 @@ $("#lat, #lng").spinner({
 
 /* On réalise une action au clic, au zoom et au déplacement sur la carte */
 map.addEventListener("click", onMapClick);
-map.addEventListener("move", setSpinnerCoords)
+map.addEventListener("moveend", setSpinnerCoords)
 map.addEventListener("zoomend", setSliderZoom)
 
 // create the geocoding control and add it to the map
