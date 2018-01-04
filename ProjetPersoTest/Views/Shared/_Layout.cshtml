@@ -22,7 +22,7 @@
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-header">
-            <img src="~/img/icon.png" id="app-icon"/>
+            <img src="~/img/icon.png" id="app-icon" />
             <!-- Condition qui permet de masquer les options du bandeau en haut de la page si l'utilisateur est déconnecté -->
             @if (ViewBag.isConnected != null && ViewBag.isConnected)
             {
@@ -30,6 +30,8 @@
                 @Html.ActionLink("Accueil", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
                 //Option du bandeau qui permet de se déconnecter
                 @Html.ActionLink("Déconnexion", "Deconnexion", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                //Option du bandeau qui permet d'aller sur la page "A propos"
+                @Html.ActionLink("A propos", "About", "Home", new { area = "" }, new { @class = "navbar-brand" })
             }
         </div>
         <div class="navbar-collapse collapse">

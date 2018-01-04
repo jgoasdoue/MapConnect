@@ -102,5 +102,18 @@ namespace ProjetPersoTest.Controllers
             }
             return RedirectToAction("Connexion");
         }
+
+        /**
+         * Permet d'afficher la page About.cshtml si l'utilisateur est connecté, sinon renvoie sur la page de connexion (Connexion.cshtml)
+         */
+        public ActionResult About()
+        {
+            ViewBag.isConnected = isConnected;
+            if (isConnected == true)
+            {
+                return View("About");
+            }
+            return RedirectToAction("Connexion");
+        }
     }
 }
