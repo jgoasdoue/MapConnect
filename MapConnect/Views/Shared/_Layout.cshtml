@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -27,13 +26,24 @@
             @if (ViewBag.isConnected != null && ViewBag.isConnected)
             {
                 //Option du bandeau qui permet de revenir à la page d'accueil
-                @Html.ActionLink("Accueil", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                //Option du bandeau qui permet de se déconnecter
-                @Html.ActionLink("Déconnexion", "Deconnexion", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                //<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+                <a href="@Url.Action("Index", "Home",null)" class="navbar-brand">
+                    <img src="~/img/home.png" id="icon-navbar" >
+                </a>
+                //Option du bandeau qui permet d'aller sur la page "Carte"
+                <a href="@Url.Action("Map", "Home",null)" class="navbar-brand">
+                    <img src="~/img/map.png" id="icon-navbar">
+                </a>
                 //Option du bandeau qui permet d'aller sur la page "A propos"
-                @Html.ActionLink("A propos", "About", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            }
-        </div>
+                <a href="@Url.Action("About", "Home",null)" class="navbar-brand">
+                    <img src="~/img/about.png" id="icon-navbar">
+                </a>
+                //Option du bandeau qui permet de se déconnecter
+                <a href="@Url.Action("Deconnexion", "Home",null)" class="navbar-brand">
+                    <img src="~/img/logout.png" id="icon-navbar">
+                </a>
+             }
+</div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav"></ul>
         </div>

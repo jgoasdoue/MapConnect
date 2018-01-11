@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Connexion";
 }
 
@@ -12,8 +11,10 @@
     <!--Placeholder pour les messages d'erreur-->
     @ViewData["Message"]
     <!--Champs d'identifiants permettant de s'authentifier sur le site-->
-    <p>Nom d'utilisateur: <input type="text" name="user" /></p>
-    <p>Mot de passe: <input type="password" name="password" /></p>
+    <label for="user">Nom d'utilisateur: </label><input type="text" name="user" />
+    <br />
+    <label for="password">Mot de passe: </label><input type="password" name="password" />
+    <br />
     <br />
     <!--Bouton de connexion-->
     <input type="submit" value="Se connecter" />
