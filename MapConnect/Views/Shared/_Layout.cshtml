@@ -24,9 +24,8 @@
             <img src="~/img/icon.png" id="app-icon" />
             <!-- Condition qui permet de masquer les options du bandeau en haut de la page si l'utilisateur est déconnecté -->
             @if (ViewBag.isConnected != null && ViewBag.isConnected)
-            {
+            {                
                 //Option du bandeau qui permet de revenir à la page d'accueil
-                //<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
                 <a href="@Url.Action("Index", "Home",null)" class="navbar-brand">
                     <img src="~/img/home.png" id="icon-navbar" >
                 </a>
@@ -43,7 +42,7 @@
                     <img src="~/img/logout.png" id="icon-navbar">
                 </a>
              }
-</div>
+        </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav"></ul>
         </div>

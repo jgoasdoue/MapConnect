@@ -14,28 +14,28 @@ namespace ProjetPersoTest.Models
         {
             infos = new ConnInfos
             {
-                Con = new SqlConnection(),
+                Con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\jgoasdoue\Documents\dbTest.mdf;Integrated Security=True;Connect Timeout=30"),
                 Login = "",
                 Password = ""
             };
         }
 
-        public void OuvrirConnexionBDD(string user, string password)
+        public void OpenDBConn()
         {
-            infos = new ConnInfos {
-                Con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\jgoasdoue\Documents\dbTest.mdf;Integrated Security=True;Connect Timeout=30"),
-                Login = user,
-                Password = password
-            };
             infos.Con.Open();
         }
 
-        public SqlDataReader InterrogeBDD()
+        public SqlDataReader GetLoginInfosDB(string user, string password)
         {
-            if(infos.Con == null)
+            infos.Login = user;
+            infos.Password = password;
+
+            if (infos.Con.ConnectionString == "")
             {
                 throw new Exception("La connexion à la base n'est pas initialisée");
             }
+
+            OpenDBConn();
 
             string request = "SELECT * FROM Login WHERE [user] = '" + infos.Login + "' AND [pass] = '" + infos.Password + "' ";
             SqlCommand cmd = new SqlCommand(request, infos.Con);
@@ -44,9 +44,25 @@ namespace ProjetPersoTest.Models
             return result;
         }
 
-        public void FermerConnexionBDD()
+        public SqlDataReader GetNews()
         {
-            if(infos.Con != null)
+            if (infos.Con.ConnectionString == "")
+            {
+                throw new Exception("La connexion à la base n'est pas initialisée");
+            }
+
+            OpenDBConn();
+
+            string request = "SELECT News_date, Content FROM News ORDER BY News_date DESC";
+            SqlCommand cmd = new SqlCommand(request, infos.Con);
+            SqlDataReader result = cmd.ExecuteReader();
+
+            return result;
+        }
+
+        public void CloseDBConn()
+        {
+            if(infos.Con.ConnectionString != null)
             {
                 infos.Con.Close();
             }

@@ -8,20 +8,10 @@
     <h3>
         News
     </h3>
+    @foreach(string news in ViewBag.News){
     <div id="news">
-        <h4>
-            Mise en place des news
-        </h4>
-        <p>
-            Le 11 Janvier 2018, le système de news a été mis en place. Il s'agit d'une version de base, avec des news directement dans le code.
-            <br />
-            Des améliorations sur cete partie sont à prévoir, pour entre autre rendre dynamique cette section.
-        </p>
+        @Html.Raw(news)
     </div>
+    }
+    
 </div>
-
-<!--<p>Voici une petite vidéo super géniale!</p>
-<iframe width="420" height="315"
-        src="https://www.youtube.com/XGSy3_Czz8k"></iframe>-->
-<!-- Lien vers la page de la carte -->
-<!--@Html.ActionLink("Pour accéder à la carte, cliquez ici", "./Map")-->

@@ -9,8 +9,9 @@ namespace ProjetPersoTest.Models
 {
     interface IDal: IDisposable
     {
-        void OuvrirConnexionBDD(string user, string password);
-        SqlDataReader InterrogeBDD();
-        void FermerConnexionBDD();
+        void OpenDBConn();
+        SqlDataReader GetNews();
+        SqlDataReader GetLoginInfosDB(string user, string password);
+        void CloseDBConn();
     }
 }

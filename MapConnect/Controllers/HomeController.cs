@@ -1,6 +1,8 @@
 ﻿using ProjetPersoTest.Models;
 using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Web.Mvc;
 
 namespace ProjetPersoTest.Controllers
@@ -17,11 +19,27 @@ namespace ProjetPersoTest.Controllers
         public ActionResult Index()
         {
             ViewBag.isConnected = isConnected;
+            try
+            {
+                ViewBag.News = new List<string>();
+                SqlDataReader sdr = dal.GetNews();
+                if (sdr.HasRows)
+                {
+                    while (sdr.Read())
+                    {
+                        ViewBag.News.Add(sdr.GetString(1));
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                Debug.WriteLine("Error: An exception occured\n" + e.Message);
+                dal.CloseDBConn();
+            }
             if (isConnected == false)
             {
                 return RedirectToAction("Connexion");
             }
-
             return View("Index");
         }
 
@@ -45,20 +63,19 @@ namespace ProjetPersoTest.Controllers
         [HttpPost]
         public ActionResult Connexion(object sender, EventArgs e)
         {
+            
+            string user = Request.Form["user"];
+            string password = Request.Form["password"];
+
+            if (user.Contains("'") || user.Contains("\\") || password.Contains("'") || password.Contains("\\"))
+            {
+                isConnected = false;
+                ViewData["Message"] = "Tentative d'injection détectée! Annulation de la tentative de connexion";
+                return Connexion();
+            }
             try
             {
-                string user = Request.Form["user"];
-                string password = Request.Form["password"];
-                dal.OuvrirConnexionBDD(user, password);
-
-                if (user.Contains("'") || user.Contains("\\") || password.Contains("'") || password.Contains("\\"))
-                {
-                    isConnected = false;
-                    ViewData["Message"] = "Tentative d'injection détectée! Annulation de la tentative de connexion";
-                    return Connexion();
-                }
-
-                SqlDataReader sdr = dal.InterrogeBDD();
+                SqlDataReader sdr = dal.GetLoginInfosDB(user, password);
 
                 if ((sdr.Read() == true))
                 {
@@ -71,9 +88,14 @@ namespace ProjetPersoTest.Controllers
                     isConnected = false;
                 }
             }
+            catch (Exception ex)
+            {
+                isConnected = false;
+                Debug.WriteLine("Error: An exception occured\n" + ex.StackTrace);
+            }
             finally
             {
-                dal.FermerConnexionBDD();
+                dal.CloseDBConn();
                 ViewBag.isConnected = isConnected;
             }
 
@@ -87,6 +109,7 @@ namespace ProjetPersoTest.Controllers
         {
             isConnected= false;
             ViewBag.isConnected = isConnected;
+            dal.CloseDBConn();
             return View("Deconnexion");
         }
 
