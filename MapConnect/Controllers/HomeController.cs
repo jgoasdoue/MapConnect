@@ -18,21 +18,37 @@ namespace ProjetPersoTest.Controllers
          */
         public ActionResult Index()
         {
+            SqlDataReader maintenanceResult = dal.IsUp("Home");
+            if (maintenanceResult.HasRows)
+            {
+                while (maintenanceResult.Read())
+                {
+                    if (maintenanceResult.GetInt32(0) == 1)
+                    {
+                        isConnected = false;
+                        Session["message"] = maintenanceResult.GetString(1);
+                        return RedirectToAction("Index", "Maintenance");
+                    }
+                }
+                maintenanceResult.Close();
+            }
             ViewBag.isConnected = isConnected;
             try
             {
                 ViewBag.News = new List<string>();
-                SqlDataReader sdr = dal.GetNews();
-                if (sdr.HasRows)
+                SqlDataReader newsResult = dal.GetNews();
+                if (newsResult.HasRows)
                 {
-                    while (sdr.Read())
+                    while (newsResult.Read())
                     {
-                        ViewBag.News.Add(sdr.GetString(1));
+                        ViewBag.News.Add(newsResult.GetString(1));
                     }
+                    newsResult.Close();
                 }
             }
             catch(Exception e)
             {
+                isConnected = false;
                 Debug.WriteLine("Error: An exception occured\n" + e.Message);
                 dal.CloseDBConn();
             }

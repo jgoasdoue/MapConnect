@@ -1,6 +1,0 @@
-TODO (non exhaustif) :
-- Refactoriser pour avoir un vrai modèle MVC
-- Optimiser pour avoir le moins de code possible tout en ayant un fonctionnement impeccable
-- Commenter le code (pour des modifs futures)
-- Modifier la connexion à la base (dans le cas où je change pour avoir une vraie base de données)
-- Ajouter des marqueurs à la carte

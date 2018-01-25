@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 
 namespace ProjetPersoTest.Models
 {
@@ -22,7 +20,10 @@ namespace ProjetPersoTest.Models
 
         public void OpenDBConn()
         {
-            infos.Con.Open();
+            if(infos.Con.State == ConnectionState.Closed)
+            {
+                infos.Con.Open();
+            }
         }
 
         public SqlDataReader GetLoginInfosDB(string user, string password)
@@ -54,6 +55,22 @@ namespace ProjetPersoTest.Models
             OpenDBConn();
 
             string request = "SELECT News_date, Content FROM News ORDER BY News_date DESC";
+            SqlCommand cmd = new SqlCommand(request, infos.Con);
+            SqlDataReader result = cmd.ExecuteReader();
+
+            return result;
+        }
+
+        public SqlDataReader IsUp(string appName)
+        {
+            if (infos.Con.ConnectionString == "")
+            {
+                throw new Exception("La connexion à la base n'est pas initialisée");
+            }
+
+            OpenDBConn();
+
+            string request = "SELECT State, Message FROM Maintenance WHERE Name = '" + appName + "'";
             SqlCommand cmd = new SqlCommand(request, infos.Con);
             SqlDataReader result = cmd.ExecuteReader();
 

@@ -11,6 +11,7 @@ namespace ProjetPersoTest.Models
     {
         void OpenDBConn();
         SqlDataReader GetNews();
+        SqlDataReader IsUp(string appName);
         SqlDataReader GetLoginInfosDB(string user, string password);
         void CloseDBConn();
     }

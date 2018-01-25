@@ -2,6 +2,11 @@
 body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    /*background-image: url()*/
+    /*background-image: url(https://vignette.wikia.nocookie.net/nyancat/images/b/b4/Slide_Nyan_Cat.gif/revision/latest?cb=20121128201318);*/
 }
 
 /* Définit le padding du contenu présent dans le corps de l'application afin d'éviter que celui-ci ne touche les bords */
@@ -60,19 +65,12 @@ html, body, #map {
 #info-div {
     padding: 5px;
     border: 0.5px solid rgba(0, 0, 0, 0.3);
-    /*-moz-border-radius: 9px;
-    -khtml-border-radius: 9px;
-    -webkit-border-radius: 9px;*/
     border-radius: 9px;
 }
 
 #news {
     padding: 9px;
     border: 0.5px solid rgba(0, 0, 0, 0.0);
-    /*-moz-border-radius: 9px;
-    -khtml-border-radius: 9px;
-    -webkit-border-radius: 9px;*/
-    /*border-radius: 9px;*/
 }
 
 label {
@@ -82,3 +80,11 @@ label {
 .navbar-brand {
     padding-top: 7.5px!important;
 }
+
+#maintenance-msg {
+    font-size: 17px;
+}
+
+/*h1, h2, h3, h4, p, label {
+    color: white!important;
+}*/

@@ -34,34 +34,22 @@ function setSpinnerCoords(e) {
 /* Mets à jour la valeur du slider au zoom sur la carte */
 function setSliderZoom() {
     $("#slider-zoom").slider('value', map.getZoom());
+    setStep(map.getZoom());
 }
 
-$(function () {
-    var progressbar = $("#progressbar"),
-        progressLabel = $(".progress-label");
-
-    progressbar.progressbar({
-        value: false,
-        change: function () {
-            progressLabel.text(progressbar.progressbar("value") + "%");
-        },
-        complete: function () {
-            progressLabel.text("Complete!");
-        }
-    });
-
-    function progress() {
-        var val = progressbar.progressbar("value") || 0;
-
-        progressbar.progressbar("value", val + 2);
-
-        if (val < 99) {
-            setTimeout(progress, 80);
-        }
+function centerOnResult(e) {
+    var bbox = e.geocode.bbox;
+    var center = e.geocode.center;
+    var options = {
+        radius: 3,
+        opacity: 0.3,
+        fillOpacity: 0.6,
+        fillColor: "#00ffff",
+        color: "#00ffff"
     }
-
-    setTimeout(progress, 2000);
-});
+    var point = L.circleMarker(center, options).addTo(map);
+    map.fitBounds(bbox);
+}
 
 /* On initialiser la carte */
 var map = L.map('map', {
@@ -75,7 +63,7 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 /* On ajoute un marqueur sur la carte */
-var solutec = L.marker([48.87430545931439, 2.32435405254364]).addTo(map);
+var solutec = L.marker([48.8742713, 2.324352]).addTo(map);
 solutec.addEventListener("click", onPopupClick);
 
 /* On crée un objet Gare Saint-Lazare sur la carte */
@@ -93,6 +81,23 @@ var gareSL = L.polygon([
 ]).addTo(map);
 gareSL.addEventListener("click", onGSLClick);
 
+/* On initialise des spinners pour les champs de latitude et longitude */
+$("#lat").spinner({
+    step: 0.015,
+    spin: position,
+    stop: position,
+    max: 85.051,
+    min: -85.051
+});
+
+$("#lng").spinner({
+    step: 0.015,
+    spin: position,
+    stop: position,
+    max: 170,
+    min: -170
+});
+
 /* On crée le slider de zoom */
 $("#slider-zoom").slider({
     min: 0,
@@ -100,14 +105,20 @@ $("#slider-zoom").slider({
     value: 13,
     slide: function (event, ui) {
         map.setZoom(ui.value);
+        setStep(ui.value);
     }
 });
 
-/* On initialise des spinners pour les champs de latitude et longitude */
-$("#lat, #lng").spinner({
-    step: .001,
-    change: position,
-    stop: position
+/* On définit la valeur du pas dans les spinners de latitude et longitude */
+function setStep(val) {
+    allSteps = [2, 1.429, 1.02, 0.729, 0.521, 0.372, 0.266, 0.19, 0.136, 0.097, 0.069, 0.049, 0.035, 0.025, 0.018, 0.013, 0.009, 0.007, 0.005];
+    //allSteps = [1.219, 0.871, 0.622, 0.444, 0.317, 0.227, 0.162, 0.116, 0.083, 0.059, 0.042, 0.03, 0.022, 0.015, 0.011, 0.008, 0.006, 0.004, 0.003];
+    $("#lat, #lng").spinner("option", "step", allSteps[val]);
+}
+
+/* On désactive la modification au clavier des textes dans les spinners */
+$("#lng, #lat").bind("keydown", function (event) {
+    event.preventDefault();
 });
 
 /* On réalise une action au clic, au zoom et au déplacement sur la carte */
@@ -115,16 +126,8 @@ map.addEventListener("click", onMapClick);
 map.addEventListener("moveend", setSpinnerCoords)
 map.addEventListener("zoomend", setSliderZoom)
 
-/* Crée le géocodeur ESRI pour chercher une adresse et l'ajoute à la carte */
-var searchControl = L.esri.Geocoding.geosearch().addTo(map);
-
-/* Crée un groupe de couche vide pour lister les adresses retournées en résultat du géocodeur et l'ajoute à la carte */
-var results = L.layerGroup().addTo(map);
-
-/* Ajoute les résultats retournés par le géocodeur dans le groupe de couche lorsque le géocodeur les reçoit */
-searchControl.on("results", function (data) {
-    results.clearLayers();
-    for (var i = data.results.length - 1; i >= 0; i--) {
-        results.addLayer(L.marker(data.results[i].latlng));
-    }
+var geocoder = L.Control.geocoder({
+    defaultMarkGeocode: false
 });
+
+geocoder.on('markgeocode', centerOnResult).addTo(map);

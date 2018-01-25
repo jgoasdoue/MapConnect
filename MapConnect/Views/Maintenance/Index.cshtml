@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Maintenance</h2>
+
+<p>Veuillez patienter, une maintenance est en cours...</p>
+
+<p id="maintenance-msg">Cause de la maintenance: @ViewBag.Message</p>
+
+<p>Pour revenir à la page de connexion, vous pouvez cliquer <a href="@Url.Action("Connexion", "Home",null)">ici</a></p>
