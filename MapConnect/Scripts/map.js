@@ -1,4 +1,5 @@
-﻿/* Fonction qui ouvre une popup au clic sur le marqueur */
+﻿var point;
+/* Fonction qui ouvre une popup au clic sur le marqueur */
 function onPopupClick(e) {
     this.bindPopup("<b>Solutec</b><br/>Coordinates : (" + e.latlng.lat.toFixed(4) + ", " + e.latlng.lng.toFixed(4) + ")");
 }
@@ -25,30 +26,32 @@ function position() {
     map.panTo(setLatLong());
 }
 
-/* Mets à jour la valeur des spinners quand on se déplace sur la carte */
+/* Met à jour la valeur des spinners quand on se déplace sur la carte */
 function setSpinnerCoords(e) {
     $("#lat").spinner('value', e.target.getCenter().lat);
     $("#lng").spinner('value', e.target.getCenter().lng);
 }
 
-/* Mets à jour la valeur du slider au zoom sur la carte */
+/* Met à jour la valeur du slider au zoom sur la carte */
 function setSliderZoom() {
     $("#slider-zoom").slider('value', map.getZoom());
     setStep(map.getZoom());
 }
 
+/* Centre la carte sur l'endroit de la recherche et y met un point */
 function centerOnResult(e) {
-    var bbox = e.geocode.bbox;
-    var center = e.geocode.center;
+    if (map.hasLayer(point)) {
+        map.removeLayer(point);
+    }
     var options = {
         radius: 3,
-        opacity: 0.3,
-        fillOpacity: 0.6,
+        opacity: 0.8,
+        fillOpacity: 0.8,
         fillColor: "#00ffff",
         color: "#00ffff"
     }
-    var point = L.circleMarker(center, options).addTo(map);
-    map.fitBounds(bbox);
+    point = L.circleMarker(e.geocode.center, options).addTo(map);
+    map.fitBounds(e.geocode.bbox);
 }
 
 /* On initialiser la carte */
@@ -112,7 +115,6 @@ $("#slider-zoom").slider({
 /* On définit la valeur du pas dans les spinners de latitude et longitude */
 function setStep(val) {
     allSteps = [2, 1.429, 1.02, 0.729, 0.521, 0.372, 0.266, 0.19, 0.136, 0.097, 0.069, 0.049, 0.035, 0.025, 0.018, 0.013, 0.009, 0.007, 0.005];
-    //allSteps = [1.219, 0.871, 0.622, 0.444, 0.317, 0.227, 0.162, 0.116, 0.083, 0.059, 0.042, 0.03, 0.022, 0.015, 0.011, 0.008, 0.006, 0.004, 0.003];
     $("#lat, #lng").spinner("option", "step", allSteps[val]);
 }
 
@@ -126,8 +128,8 @@ map.addEventListener("click", onMapClick);
 map.addEventListener("moveend", setSpinnerCoords)
 map.addEventListener("zoomend", setSliderZoom)
 
+/* On ajoute un module de recherche à la carte */
 var geocoder = L.Control.geocoder({
     defaultMarkGeocode: false
 });
-
 geocoder.on('markgeocode', centerOnResult).addTo(map);

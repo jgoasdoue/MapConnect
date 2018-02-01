@@ -38,3 +38,5 @@ MapConnect/.vs/ProjetPersoTest/v15/.suo
 .vs/MapConnect/v15/Server/sqlite3/storage.ide-wal
 .vs/MapConnect/v15/Server/sqlite3/storage.ide-shm
 TODO.txt
+*.lck
+Virtual Machines/
