@@ -1,6 +1,7 @@
 ﻿using ProjetPersoTest.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Web.Mvc;
@@ -18,25 +19,28 @@ namespace ProjetPersoTest.Controllers
          */
         public ActionResult Index()
         {
-            SqlDataReader maintenanceResult = dal.IsUp("Home");
-            if (maintenanceResult.HasRows)
-            {
-                while (maintenanceResult.Read())
-                {
-                    if (maintenanceResult.GetInt32(0) == 1)
-                    {
-                        isConnected = false;
-                        Session["message"] = maintenanceResult.GetString(1);
-                        return RedirectToAction("Index", "Maintenance");
-                    }
-                }
-                maintenanceResult.Close();
-            }
-            ViewBag.isConnected = isConnected;
             try
             {
+                SqlDataReader maintenanceResult = dal.IsUp("Home");
+                if (maintenanceResult.HasRows)
+                {
+                    while (maintenanceResult.Read())
+                    {
+                        if (maintenanceResult.GetInt32(0) == 1)
+                        {
+                            isConnected = false;
+                            Session["message"] = maintenanceResult.GetString(1);
+                            return RedirectToAction("Index", "Maintenance");
+                        }
+                    }
+                    maintenanceResult.Close();
+                }
+
+                ViewBag.isConnected = isConnected;
+
                 ViewBag.News = new List<string>();
                 SqlDataReader newsResult = dal.GetNews();
+
                 if (newsResult.HasRows)
                 {
                     while (newsResult.Read())
@@ -46,16 +50,18 @@ namespace ProjetPersoTest.Controllers
                     newsResult.Close();
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 isConnected = false;
-                Debug.WriteLine("Error: An exception occured\n" + e.Message);
+                ViewData["Message"] = String.Format(ConfigurationManager.AppSettings["generalErrorString"], e.Message);
                 dal.CloseDBConn();
             }
+
             if (isConnected == false)
             {
                 return RedirectToAction("Connexion");
             }
+
             return View("Index");
         }
 
@@ -107,7 +113,7 @@ namespace ProjetPersoTest.Controllers
             catch (Exception ex)
             {
                 isConnected = false;
-                Debug.WriteLine("Error: An exception occured\n" + ex.StackTrace);
+                ViewData["Message"] = String.Format(ConfigurationManager.AppSettings["generalErrorString"], ex.Message);
             }
             finally
             {
