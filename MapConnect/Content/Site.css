@@ -85,6 +85,10 @@ label {
     font-size: 17px;
 }
 
-/*h1, h2, h3, h4, p, label {
-    color: white!important;
-}*/
+.navbar-header {
+    width: 100%;
+}
+
+.topbar-right {
+    float: right;
+}

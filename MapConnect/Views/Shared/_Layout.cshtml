@@ -4,8 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Map Connect - @ViewBag.Title</title>
-    <!--Import personal style sheet-->
+    <!--Import personal module-->
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    
     <!--Import JQuery module-->
     <link href="~/Content/jquery-ui.min.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/jquery-3.2.1.min.js"></script>
@@ -25,25 +26,31 @@
         <div class="navbar-header">
             <img src="~/img/icon.png" id="app-icon" />
             <!-- Condition qui permet de masquer les options du bandeau en haut de la page si l'utilisateur est déconnecté -->
-            @if (ViewBag.isConnected != null && ViewBag.isConnected)
-            {                
-                //Option du bandeau qui permet de revenir à la page d'accueil
-                <a href="@Url.Action("Index", "Home",null)" class="navbar-brand">
-                    <img src="~/img/home.png" id="icon-navbar" >
-                </a>
-                //Option du bandeau qui permet d'aller sur la page "Carte"
-                <a href="@Url.Action("Map", "Home",null)" class="navbar-brand">
-                    <img src="~/img/map.png" id="icon-navbar">
-                </a>
-                //Option du bandeau qui permet d'aller sur la page "A propos"
-                <a href="@Url.Action("About", "Home",null)" class="navbar-brand">
-                    <img src="~/img/about.png" id="icon-navbar">
-                </a>
-                //Option du bandeau qui permet de se déconnecter
-                <a href="@Url.Action("Deconnexion", "Home",null)" class="navbar-brand">
-                    <img src="~/img/logout.png" id="icon-navbar">
-                </a>
-             }
+            <div class="topbar-right">
+                @if (ViewBag.isConnected != null && ViewBag.isConnected)
+                {
+                    //Option du bandeau qui permet de revenir à la page d'accueil
+                    <a href="@Url.Action("Index", "Home",null)" class="navbar-brand">
+                        <img src="~/img/home.png" id="icon_home" /> <!--onmouseover='src="../../img/home_pressed.png"' onmouseout='src="../../img/home.png"'>-->
+                    </a>
+
+                    //Option du bandeau qui permet d'aller sur la page "Carte"
+                    <a href="@Url.Action("Map", "Home",null)" class="navbar-brand">
+                        <img src="~/img/map.png" id="icon_map" /> <!-- onmouseover='src="../../img/map_pressed.png"' onmouseout='src="../../img/map.png"'>-->
+                    </a>
+
+                    //Option du bandeau qui permet d'aller sur la page "A propos"
+                    <a href="@Url.Action("About", "Home",null)" class="navbar-brand">
+                        <img src="~/img/about.png" id="icon_about" /> <!--onmouseover='src="../../img/about_pressed.png"' onmouseout='src="../../img/about.png"'>-->
+                    </a>
+
+                    //Option du bandeau qui permet de se déconnecter
+                    <a href="@Url.Action("Deconnexion", "Home",null)" class="navbar-brand">
+                        <img src="~/img/logout.png" id="icon_logout" /> <!-- onmouseover='src="../../img/logout_pressed.png"' onmouseout='src="../../img/logout.png"'/>-->
+                    </a>
+                }
+                <script src="~/Scripts/site.js"></script>
+            </div>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav"></ul>

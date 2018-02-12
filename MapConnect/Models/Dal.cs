@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -12,7 +13,7 @@ namespace ProjetPersoTest.Models
         {
             infos = new ConnInfos
             {
-                Con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\jgoasdoue\Documents\dbTest.mdf;Integrated Security=True;Connect Timeout=30"),
+                Con = new SqlConnection(ConfigurationManager.AppSettings["connectionString"]),
                 Login = "",
                 Password = ""
             };
@@ -33,12 +34,12 @@ namespace ProjetPersoTest.Models
 
             if (infos.Con.ConnectionString == "")
             {
-                throw new Exception("La connexion à la base n'est pas initialisée");
+                throw new Exception(ConfigurationManager.AppSettings["errorNullConnectString"]);
             }
 
             OpenDBConn();
 
-            string request = "SELECT * FROM Login WHERE [user] = '" + infos.Login + "' AND [pass] = '" + infos.Password + "' ";
+            string request = String.Format(ConfigurationManager.AppSettings["loginRequest"], infos.Login, infos.Password);// "SELECT * FROM Login WHERE [user] = '" + infos.Login + "' AND [pass] = '" + infos.Password + "' ";
             SqlCommand cmd = new SqlCommand(request, infos.Con);
             SqlDataReader result = cmd.ExecuteReader();
 
@@ -49,12 +50,12 @@ namespace ProjetPersoTest.Models
         {
             if (infos.Con.ConnectionString == "")
             {
-                throw new Exception("La connexion à la base n'est pas initialisée");
+                throw new Exception(ConfigurationManager.AppSettings["errorNullConnectString"]);
             }
 
             OpenDBConn();
 
-            string request = "SELECT News_date, Content FROM News ORDER BY News_date DESC";
+            string request = ConfigurationManager.AppSettings["newsRequest"];
             SqlCommand cmd = new SqlCommand(request, infos.Con);
             SqlDataReader result = cmd.ExecuteReader();
 
@@ -65,12 +66,12 @@ namespace ProjetPersoTest.Models
         {
             if (infos.Con.ConnectionString == "")
             {
-                throw new Exception("La connexion à la base n'est pas initialisée");
+                throw new Exception(ConfigurationManager.AppSettings["errorNullConnectString"]);
             }
 
             OpenDBConn();
 
-            string request = "SELECT State, Message FROM Maintenance WHERE Name = '" + appName + "'";
+            string request = String.Format(ConfigurationManager.AppSettings["maintenanceRequest"], appName);
             SqlCommand cmd = new SqlCommand(request, infos.Con);
             SqlDataReader result = cmd.ExecuteReader();
 
