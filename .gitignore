@@ -26,6 +26,7 @@ MapConnect/bin/roslyn/Microsoft.Build.Tasks.CodeAnalysis.dll
 MapConnect/bin/roslyn/vbc.exe.config
 MapConnect/bin/roslyn/vbc.exe
 MapConnect/bin/roslyn/VBCSCompiler.exe.config
+MapConnect/bin/*
 MapConnect/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
 MapConnect/obj/Debug/DesignTimeResolveAssemblyReferences.cache
 MapConnect/obj/Debug/MapConnect.csproj.CoreCompileInputs.cache
