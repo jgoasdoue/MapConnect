@@ -1,8 +1,11 @@
-﻿using ProjetPersoTest.Models;
+﻿using Newtonsoft.Json;
+using ProjetPersoTest.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Net;
+using System.Web.Configuration;
 using System.Web.Mvc;
 
 namespace ProjetPersoTest.Controllers
@@ -84,9 +87,25 @@ namespace ProjetPersoTest.Controllers
         [HttpPost]
         public ActionResult Connexion(object sender, EventArgs e)
         {
-            
-            string user = Request.Form["user"];
-            string password = Request.Form["password"];
+            String user = Request.Form["user"];
+            String password = Request.Form["password"];
+            CaptchaResponse captchaResponse = new CaptchaResponse();
+            if ((user != null && password != null))
+            {
+                String response = Request["g-recaptcha-response"];
+                String verifLink = String.Format(ConfigurationManager.AppSettings["verifLinkGoogle"], ConfigurationManager.AppSettings["privateCaptchaKey"], response);
+                WebClient client = new WebClient();
+
+                if (WebConfigurationManager.AppSettings["AppContext"].ToUpper() == "GLOBAL")
+                {
+                    WebProxy proxy = new WebProxy(ConfigurationManager.AppSettings["proxyAddrValue"] + ":8080", true);
+                    proxy.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["proxyUserNameValue"], ConfigurationManager.AppSettings["proxyPassWordValue"]);
+                    client.Proxy = proxy;
+                }
+
+                var reply = client.DownloadString(verifLink);
+                captchaResponse = JsonConvert.DeserializeObject<CaptchaResponse>(reply);
+            }
 
             if (user.Contains("'") || user.Contains("\\") || password.Contains("'") || password.Contains("\\"))
             {
@@ -100,8 +119,14 @@ namespace ProjetPersoTest.Controllers
 
                 if ((sdr.Read() == true))
                 {
-                    ViewData["Message"] = "";
-                    isConnected = true;
+                    if (captchaResponse.Success == "false"){
+                        ViewData["Message"] = "Captcha wasn't ticked";
+                        isConnected = false;
+                    }
+                    else {
+                        ViewData["Message"] = "";
+                        isConnected = true;
+                    }
                 }
                 else
                 {

@@ -1,4 +1,5 @@
-﻿@{
+﻿@using System.Configuration;
+@{
     ViewBag.Title = "Connexion";
 }
 
@@ -16,7 +17,11 @@
     <label for="password">Mot de passe: </label><input type="password" name="password" />
     <br />
     <br />
+    @{
+        <div class="g-recaptcha" data-sitekey="@ConfigurationManager.AppSettings["publicCaptchaKey"]"></div>
+    }
     <!--Bouton de connexion-->
     <input type="submit" value="Se connecter" />
 </div>
 }
+
