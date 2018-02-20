@@ -4,13 +4,24 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Map Connect - @ViewBag.Title</title>
+
     <!--Import personal module-->
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <!--Import ReCAPTCHA module from Google-->
     <script src='https://www.google.com/recaptcha/api.js' async defer></script>
     <!--Import JQuery module-->
-    <link href="~/Content/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/jquery-3.2.1.js"></script>
+    <script>
+        $(function () {
+            $("img").tooltip({
+                classes: {
+                    "ui-tooltip": "tooltip-custom ui-corner-all"
+                },
+                track: true
+            });
+        });
+    </script>
     <!--Import BootStrap sources-->
     <script src="~/Scripts/bootstrap.min.js"></script>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -32,22 +43,22 @@
                 {
                     //Option du bandeau qui permet de revenir à la page d'accueil
                     <a href="@Url.Action("Index", "Home",null)" class="navbar-brand">
-                        <img src="~/img/home.png" id="icon_home" />
+                        <img src="~/img/home.png" id="icon_home"/>
                     </a>
 
                     //Option du bandeau qui permet d'aller sur la page "Carte"
                     <a href="@Url.Action("Map", "Home",null)" class="navbar-brand">
-                        <img src="~/img/map.png" id="icon_map" />
+                        <img src="~/img/map.png" id="icon_map"/>
                     </a>
 
                     //Option du bandeau qui permet d'aller sur la page "A propos"
                     <a href="@Url.Action("About", "Home",null)" class="navbar-brand">
-                        <img src="~/img/about.png" id="icon_about" />
+                        <img src="~/img/about.png" id="icon_about"/>
                     </a>
 
                     //Option du bandeau qui permet de se déconnecter
                     <a href="@Url.Action("Deconnexion", "Home",null)" class="navbar-brand">
-                        <img src="~/img/logout.png" id="icon_logout" />
+                        <img src="~/img/logout.png" id="icon_logout"/>
                     </a>
                 }
                 <script src="~/Scripts/site.js"></script>

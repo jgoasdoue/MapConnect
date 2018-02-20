@@ -8,9 +8,14 @@
     <h3>
         News
     </h3>
-    @foreach(string news in ViewBag.News){
+    @foreach (string news in ViewBag.News)
+    {
         <div id="news">
             @Html.Raw(news)
         </div>
-     }
+    }
 </div>
+
+<!-- Importe jQuery-UI-->
+<script src="~/Scripts/jquery-ui.js"></script>
+

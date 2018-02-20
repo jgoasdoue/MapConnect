@@ -5,7 +5,6 @@ body {
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-    /*background-image: url()*/
     /*background-image: url(https://vignette.wikia.nocookie.net/nyancat/images/b/b4/Slide_Nyan_Cat.gif/revision/latest?cb=20121128201318);*/
 }
 
@@ -91,4 +90,11 @@ label {
 
 .topbar-right {
     float: right;
+}
+
+.tooltip-custom {
+    background-color:darkgray!important;
+    border-color:black!important;
+    height:30px;
+    padding:5px!important;
 }
