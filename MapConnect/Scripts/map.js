@@ -22,21 +22,21 @@ function setLatLong() {
 }
 
 /* Positionne le centre de la carte grâce au point créé par setLatLong() */
-function position() {
+/*function position() {
     map.panTo(setLatLong());
-}
+}*/
 
 /* Met à jour la valeur des spinners quand on se déplace sur la carte */
-function setSpinnerCoords(e) {
+/*function setSpinnerCoords(e) {
     $("#lat").spinner('value', e.target.getCenter().lat);
     $("#lng").spinner('value', e.target.getCenter().lng);
-}
+}*/
 
 /* Met à jour la valeur du slider au zoom sur la carte */
-function setSliderZoom() {
+/*function setSliderZoom() {
     $("#slider-zoom").slider('value', map.getZoom());
     setStep(map.getZoom());
-}
+}*/
 
 /* Centre la carte sur l'endroit de la recherche et y met un point */
 function centerOnResult(e) {
@@ -49,7 +49,7 @@ function centerOnResult(e) {
         fillOpacity: 0.8,
         fillColor: "#00ffff",
         color: "#00ffff"
-    }
+    };
     point = L.circleMarker(e.geocode.center, options).addTo(map);
     map.fitBounds(e.geocode.bbox);
 }
@@ -57,7 +57,7 @@ function centerOnResult(e) {
 /* On initialiser la carte */
 var map = L.map('map', {
     center: setLatLong(),
-    zoom: 13,
+    zoom: 13
 });
 
 /* On ajoute les tuiles qui doivent être affichées sur la carte */
@@ -85,7 +85,7 @@ var gareSL = L.polygon([
 gareSL.addEventListener("click", onGSLClick);
 
 /* On initialise des spinners pour les champs de latitude et longitude */
-$("#lat").spinner({
+/*$("#lat").spinner({
     step: 0.015,
     spin: position,
     stop: position,
@@ -99,10 +99,10 @@ $("#lng").spinner({
     stop: position,
     max: 170,
     min: -170
-});
+});*/
 
 /* On crée le slider de zoom */
-$("#slider-zoom").slider({
+/*$("#slider-zoom").slider({
     min: 0,
     max: 18,
     value: 13,
@@ -110,26 +110,54 @@ $("#slider-zoom").slider({
         map.setZoom(ui.value);
         setStep(ui.value);
     }
-});
+});*/
 
 /* On définit la valeur du pas dans les spinners de latitude et longitude */
-function setStep(val) {
+/*function setStep(val) {
     allSteps = [2, 1.429, 1.02, 0.729, 0.521, 0.372, 0.266, 0.19, 0.136, 0.097, 0.069, 0.049, 0.035, 0.025, 0.018, 0.013, 0.009, 0.007, 0.005];
     $("#lat, #lng").spinner("option", "step", allSteps[val]);
-}
+}*/
 
 /* On désactive la modification au clavier des textes dans les spinners */
-$("#lng, #lat").bind("keydown", function (event) {
+/*$("#lng, #lat").bind("keydown", function (event) {
     event.preventDefault();
-});
+});*/
 
 /* On réalise une action au clic, au zoom et au déplacement sur la carte */
 map.addEventListener("click", onMapClick);
-map.addEventListener("moveend", setSpinnerCoords)
-map.addEventListener("zoomend", setSliderZoom)
+/*map.addEventListener("moveend", setSpinnerCoords)
+map.addEventListener("zoomend", setSliderZoom)*/
 
 /* On ajoute un module de recherche à la carte */
 var geocoder = L.Control.geocoder({
     defaultMarkGeocode: false
 });
 geocoder.on('markgeocode', centerOnResult).addTo(map);
+
+
+
+var request = new XMLHttpRequest();
+
+request.open('GET', 'https://api.openrouteservice.org/directions?api_key=58d904a497c67e00015b45fc5cc006b9b75d475c914edc5512891317&coordinates=2.3529%2C48.8620%7C2.3517%2C48.8617&profile=driving-car&geometry_format=polyline');
+
+request.setRequestHeader('Accept', 'text/json; charset=utf-8');
+
+request.onreadystatechange = function () {
+    if (this.readyState === 4) {
+        var response = JSON.parse(this.responseText);
+        for (var routeId in response.routes) {
+            var route = response.routes[routeId];
+            var geomPoints = [];
+            //We must add the geometry points one by one
+            for (var geomId in route.geometry) {
+                var geomPoint = route.geometry[geomId];
+                //Here is the reason why the points are added one by one:
+                //The order of coordinates (longitude and latitude) can vary from one system to another,and that's the case here
+                geomPoints.push([geomPoint[1], geomPoint[0]]);
+            }
+            var geomResp = L.polyline(geomPoints).addTo(map);
+        }
+    }
+};
+
+request.send();
