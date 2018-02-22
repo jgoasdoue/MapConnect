@@ -96,7 +96,7 @@ namespace ProjetPersoTest.Controllers
                 String verifLink = String.Format(ConfigurationManager.AppSettings["verifLinkGoogle"], ConfigurationManager.AppSettings["privateCaptchaKey"], response);
                 WebClient client = new WebClient();
 
-                if (WebConfigurationManager.AppSettings["AppContext"].ToUpper() == "GLOBAL")
+                if (WebConfigurationManager.AppSettings["AppContext"].ToUpper() != "PROXYLESS")
                 {
                     WebProxy proxy = new WebProxy(ConfigurationManager.AppSettings["proxyAddrValue"] + ":8080", true);
                     proxy.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["proxyUserNameValue"], ConfigurationManager.AppSettings["proxyPassWordValue"]);
