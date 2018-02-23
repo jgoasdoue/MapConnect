@@ -114,6 +114,7 @@
     <Content Include="Content\jquery-ui.structure.min.css" />
     <Content Include="Content\jquery-ui.theme.css" />
     <Content Include="Content\jquery-ui.theme.min.css" />
+    <Content Include="Content\leaflet-routing-machine.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="img\about.png" />
     <Content Include="img\about_pressed.png" />
@@ -161,6 +162,8 @@
     <Content Include="Scripts\jquery-3.2.1.slim.min.js" />
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery-ui.min.js" />
+    <Content Include="Scripts\leaflet-routing-machine.js" />
+    <Content Include="Scripts\leaflet-routing-machine.min.js" />
     <Content Include="Scripts\map.js" />
     <Content Include="Scripts\leaflet-src.js" />
     <Content Include="Scripts\leaflet.js" />

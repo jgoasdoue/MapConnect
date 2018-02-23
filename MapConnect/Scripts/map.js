@@ -1,4 +1,6 @@
-﻿var point;
+﻿var pointCenterSearch;
+var pointRouteDeparture;
+var pointRouteArrival;
 /* Fonction qui ouvre une popup au clic sur le marqueur */
 function onPopupClick(e) {
     this.bindPopup("<b>Solutec</b><br/>Coordinates : (" + e.latlng.lat.toFixed(4) + ", " + e.latlng.lng.toFixed(4) + ")");
@@ -18,7 +20,8 @@ function onGSLClick(e) {
 
 /* Définit la latitude et la longitude d'un point */
 function setLatLong() {
-    return new L.LatLng($("#lat").val(), $("#lng").val());
+    //return new L.LatLng($("#lat").val(), $("#lng").val());
+    return new L.LatLng(48.853, 2.35);
 }
 
 /* Positionne le centre de la carte grâce au point créé par setLatLong() */
@@ -40,8 +43,8 @@ function setLatLong() {
 
 /* Centre la carte sur l'endroit de la recherche et y met un point */
 function centerOnResult(e) {
-    if (map.hasLayer(point)) {
-        map.removeLayer(point);
+    if (map.hasLayer(pointCenterSearch)) {
+        map.removeLayer(pointCenterSearch);
     }
     var options = {
         radius: 3,
@@ -134,9 +137,16 @@ var geocoder = L.Control.geocoder({
 });
 geocoder.on('markgeocode', centerOnResult).addTo(map);
 
+var routingModule = L.Routing.control({
+    reverseWaypoints: false,
+    useZoomParameter: false,
+    showAlternatives: true,
+    fitSelectedRoutes: false,
+    routeWhileDragging: true,
+    geocoder: L.Control.Geocoder.nominatim()
+}).addTo(map);
 
-
-var request = new XMLHttpRequest();
+/*var request = new XMLHttpRequest();
 
 request.open('GET', 'https://api.openrouteservice.org/directions?api_key=58d904a497c67e00015b45fc5cc006b9b75d475c914edc5512891317&coordinates=2.3529%2C48.8620%7C2.3517%2C48.8617&profile=driving-car&geometry_format=polyline');
 
@@ -160,4 +170,5 @@ request.onreadystatechange = function () {
     }
 };
 
-request.send();
+request.send();*/
+
