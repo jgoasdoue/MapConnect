@@ -1,20 +1,12 @@
 ﻿var pointCenterSearch;
-var pointRouteDeparture;
-var pointRouteArrival;
+
 /* Fonction qui ouvre une popup au clic sur le marqueur */
 function onPopupClick(e) {
     this.bindPopup("<b>Solutec</b><br/>Coordinates : (" + e.latlng.lat.toFixed(4) + ", " + e.latlng.lng.toFixed(4) + ")");
 }
 
-/* Fonction qui ajoute une popup au clic sur la carte */
-function onMapClick(e) {
-    var popup = L.popup();
-    popup.setLatLng(e.latlng).setContent("You clicked the map at (" + e.latlng.lat.toFixed(4) + ", " + e.latlng.lng.toFixed(4) + ")").openOn(map);
-}
-
 /* Fonction qui ajoute une popup au clic sur la géométrie de Gare Saint Lazare */
 function onGSLClick(e) {
-    var popup = L.popup();
     this.bindPopup("<b>Gare Saint Lazare</b><br/>Coordinates : (" + e.latlng.lat.toFixed(4) + ", " + e.latlng.lng.toFixed(4) + ")");
 }
 
@@ -24,24 +16,6 @@ function setLatLong() {
     return new L.LatLng(48.853, 2.35);
 }
 
-/* Positionne le centre de la carte grâce au point créé par setLatLong() */
-/*function position() {
-    map.panTo(setLatLong());
-}*/
-
-/* Met à jour la valeur des spinners quand on se déplace sur la carte */
-/*function setSpinnerCoords(e) {
-    $("#lat").spinner('value', e.target.getCenter().lat);
-    $("#lng").spinner('value', e.target.getCenter().lng);
-}*/
-
-/* Met à jour la valeur du slider au zoom sur la carte */
-/*function setSliderZoom() {
-    $("#slider-zoom").slider('value', map.getZoom());
-    setStep(map.getZoom());
-}*/
-
-/* Centre la carte sur l'endroit de la recherche et y met un point */
 function centerOnResult(e) {
     if (map.hasLayer(pointCenterSearch)) {
         map.removeLayer(pointCenterSearch);
@@ -53,19 +27,19 @@ function centerOnResult(e) {
         fillColor: "#00ffff",
         color: "#00ffff"
     };
-    point = L.circleMarker(e.geocode.center, options).addTo(map);
+    pointCenterSearch = L.circleMarker(e.geocode.center, options).addTo(map);
     map.fitBounds(e.geocode.bbox);
 }
 
 /* On initialiser la carte */
-var map = L.map('map', {
+var map = L.map("map", {
     center: setLatLong(),
     zoom: 13
 });
 
 /* On ajoute les tuiles qui doivent être affichées sur la carte */
-L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>'
+L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+    attribution: "Map data &copy; <a href=\"http://openstreetmap.org\">OpenStreetMap</a>"
 }).addTo(map);
 
 /* On ajoute un marqueur sur la carte */
@@ -86,6 +60,47 @@ var gareSL = L.polygon([
     [48.8762, 2.32679]
 ]).addTo(map);
 gareSL.addEventListener("click", onGSLClick);
+
+/* Fonction qui ajoute une popup au clic sur la carte */
+function onMapClick(e) {
+    var popup = L.popup();
+    popup.setLatLng(e.latlng).setContent("You clicked the map at (" + e.latlng.lat.toFixed(4) + ", " + e.latlng.lng.toFixed(4) + ")").openOn(map);
+}
+
+map.addEventListener("click", onMapClick);
+
+var geocoder = L.Control.geocoder({
+    defaultMarkGeocode: false
+});
+geocoder.on("markgeocode", centerOnResult).addTo(map);
+
+var routingModule = L.Routing.control({
+    reverseWaypoints: false,
+    useZoomParameter: false,
+    showAlternatives: true,
+    fitSelectedRoutes: false,
+    routeWhileDragging: true,
+    geocoder: L.Control.Geocoder.nominatim()
+}).addTo(map);
+
+/* Positionne le centre de la carte grâce au point créé par setLatLong() */
+/*function position() {
+    map.panTo(setLatLong());
+}*/
+
+/* Met à jour la valeur des spinners quand on se déplace sur la carte */
+/*function setSpinnerCoords(e) {
+    $("#lat").spinner('value', e.target.getCenter().lat);
+    $("#lng").spinner('value', e.target.getCenter().lng);
+}*/
+
+/* Met à jour la valeur du slider au zoom sur la carte */
+/*function setSliderZoom() {
+    $("#slider-zoom").slider('value', map.getZoom());
+    setStep(map.getZoom());
+}*/
+
+/* Centre la carte sur l'endroit de la recherche et y met un point */
 
 /* On initialise des spinners pour les champs de latitude et longitude */
 /*$("#lat").spinner({
@@ -127,48 +142,8 @@ $("#lng").spinner({
 });*/
 
 /* On réalise une action au clic, au zoom et au déplacement sur la carte */
-map.addEventListener("click", onMapClick);
+
 /*map.addEventListener("moveend", setSpinnerCoords)
 map.addEventListener("zoomend", setSliderZoom)*/
 
 /* On ajoute un module de recherche à la carte */
-var geocoder = L.Control.geocoder({
-    defaultMarkGeocode: false
-});
-geocoder.on('markgeocode', centerOnResult).addTo(map);
-
-var routingModule = L.Routing.control({
-    reverseWaypoints: false,
-    useZoomParameter: false,
-    showAlternatives: true,
-    fitSelectedRoutes: false,
-    routeWhileDragging: true,
-    geocoder: L.Control.Geocoder.nominatim()
-}).addTo(map);
-
-/*var request = new XMLHttpRequest();
-
-request.open('GET', 'https://api.openrouteservice.org/directions?api_key=58d904a497c67e00015b45fc5cc006b9b75d475c914edc5512891317&coordinates=2.3529%2C48.8620%7C2.3517%2C48.8617&profile=driving-car&geometry_format=polyline');
-
-request.setRequestHeader('Accept', 'text/json; charset=utf-8');
-
-request.onreadystatechange = function () {
-    if (this.readyState === 4) {
-        var response = JSON.parse(this.responseText);
-        for (var routeId in response.routes) {
-            var route = response.routes[routeId];
-            var geomPoints = [];
-            //We must add the geometry points one by one
-            for (var geomId in route.geometry) {
-                var geomPoint = route.geometry[geomId];
-                //Here is the reason why the points are added one by one:
-                //The order of coordinates (longitude and latitude) can vary from one system to another,and that's the case here
-                geomPoints.push([geomPoint[1], geomPoint[0]]);
-            }
-            var geomResp = L.polyline(geomPoints).addTo(map);
-        }
-    }
-};
-
-request.send();*/
-

@@ -77,7 +77,7 @@ label {
 }
 
 .navbar-brand {
-    padding-top: 7.5px!important;
+    padding-top: 7.5px;
 }
 
 #maintenance-msg {
@@ -93,8 +93,7 @@ label {
 }
 
 .tooltip-custom {
-    background-color:darkgray!important;
-    border-color:black!important;
+    background-color:darkgray;
     height:30px;
-    padding:5px!important;
+    padding:5px;
 }
