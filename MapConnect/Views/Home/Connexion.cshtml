@@ -2,26 +2,24 @@
 @{
     ViewBag.Title = "Connexion";
 }
-
 <!-- Crée le formulaire de connexion -->
 @using (Html.BeginForm())
 {
-<div class="body-content">
-    <h2>Page de connexion</h2>
-    <br />
-    <!--Placeholder pour les messages d'erreur-->
-    <p>@ViewData["Message"]</p>
-    <!--Champs d'identifiants permettant de s'authentifier sur le site-->
-    <label for="user">Nom d'utilisateur: </label><input type="text" name="user" />
-    <br />
-    <label for="password">Mot de passe: </label><input type="password" name="password" />
-    <br />
-    <br />
-    @{
-        <div class="g-recaptcha" data-sitekey="@ConfigurationManager.AppSettings["publicCaptchaKey"]"></div>
-    }
-    <!--Bouton de connexion-->
-    <input type="submit" value="Se connecter" />
-</div>
+    <div class="body-content">
+        <h2>Page de connexion</h2>
+        <br />
+        <!--Placeholder pour les messages d'erreur-->
+        <p>@ViewData["Message"]</p>
+        <!--Champs d'identifiants permettant de s'authentifier sur le site-->
+        <label for="user">Nom d'utilisateur: </label><input type="text" name="user" />
+        <br />
+        <label for="password">Mot de passe: </label><input type="password" name="password" />
+        <br />
+        <br />
+        @{
+            <div class="g-recaptcha" data-sitekey="@ConfigurationManager.AppSettings["publicCaptchaKey"]"></div>
+        }
+        <!--Bouton de connexion-->
+        <input type="submit" value="Se connecter" />
+    </div>
 }
-
