@@ -19,7 +19,7 @@ namespace ProjetPersoTest.Models
             };
         }
 
-        public void OpenDBConn()
+        public void OpenDbConn()
         {
             if(infos.Con.State == ConnectionState.Closed)
             {
@@ -37,7 +37,7 @@ namespace ProjetPersoTest.Models
                 throw new Exception(ConfigurationManager.AppSettings["errorNullConnectString"]);
             }
 
-            OpenDBConn();
+            OpenDbConn();
 
             string request = String.Format(ConfigurationManager.AppSettings["loginRequest"], infos.Login, infos.Password);// "SELECT * FROM Login WHERE [user] = '" + infos.Login + "' AND [pass] = '" + infos.Password + "' ";
             SqlCommand cmd = new SqlCommand(request, infos.Con);
@@ -53,7 +53,7 @@ namespace ProjetPersoTest.Models
                 throw new Exception(ConfigurationManager.AppSettings["errorNullConnectString"]);
             }
 
-            OpenDBConn();
+            OpenDbConn();
 
             string request = ConfigurationManager.AppSettings["newsRequest"];
             SqlCommand cmd = new SqlCommand(request, infos.Con);
@@ -69,7 +69,7 @@ namespace ProjetPersoTest.Models
                 throw new Exception(ConfigurationManager.AppSettings["errorNullConnectString"]);
             }
 
-            OpenDBConn();
+            OpenDbConn();
 
             string request = String.Format(ConfigurationManager.AppSettings["maintenanceRequest"], appName);
             SqlCommand cmd = new SqlCommand(request, infos.Con);
