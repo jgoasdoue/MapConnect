@@ -56,7 +56,7 @@ namespace ProjetPersoTest.Controllers
             {
                 isConnected = false;
                 ViewData["Message"] = String.Format(ConfigurationManager.AppSettings["generalErrorString"], e.Message);
-                dal.CloseDBConn();
+                dal.CloseDbConn();
             }
 
             if (isConnected == false)
@@ -141,7 +141,7 @@ namespace ProjetPersoTest.Controllers
             }
             finally
             {
-                dal.CloseDBConn();
+                dal.CloseDbConn();
                 ViewBag.isConnected = isConnected;
             }
 
@@ -155,7 +155,7 @@ namespace ProjetPersoTest.Controllers
         {
             isConnected= false;
             ViewBag.isConnected = isConnected;
-            dal.CloseDBConn();
+            dal.CloseDbConn();
             return View("Deconnexion");
         }
 

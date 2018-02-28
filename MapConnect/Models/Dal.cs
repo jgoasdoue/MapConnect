@@ -78,7 +78,7 @@ namespace ProjetPersoTest.Models
             return result;
         }
 
-        public void CloseDBConn()
+        public void CloseDbConn()
         {
             if(infos.Con.ConnectionString != null)
             {

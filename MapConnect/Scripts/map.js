@@ -1,22 +1,29 @@
 ﻿var pointCenterSearch;
 
-/* Fonction qui ouvre une popup au clic sur le marqueur */
-function onPopupClick(e) {
-    this.bindPopup("<b>Solutec</b><br/>Coordinates : (" + e.latlng.lat.toFixed(4) + ", " + e.latlng.lng.toFixed(4) + ")");
-}
-
-/* Fonction qui ajoute une popup au clic sur la géométrie de Gare Saint Lazare */
-function onGSLClick(e) {
-    this.bindPopup("<b>Gare Saint Lazare</b><br/>Coordinates : (" + e.latlng.lat.toFixed(4) + ", " + e.latlng.lng.toFixed(4) + ")");
-}
-
 /* Définit la latitude et la longitude d'un point */
-function setLatLong() {
+var setLatLong = function () {
     //return new L.LatLng($("#lat").val(), $("#lng").val());
     return new L.LatLng(48.853, 2.35);
-}
+};
 
-function centerOnResult(e) {
+/* On initialiser la carte */
+var map = L.map("map", {
+    center: setLatLong(),
+    zoom: 13
+});
+
+/* Fonction qui ouvre une popup au clic sur le marqueur */
+var onPopupClick = function (e) {
+    this.bindPopup("<b>Solutec</b><br/>Coordinates : (" + e.latlng.lat.toFixed(4) + ", " + e.latlng.lng.toFixed(4) + ")");
+};
+
+/* Fonction qui ajoute une popup au clic sur la géométrie de Gare Saint Lazare */
+var onGSLClick = function (e) {
+    this.bindPopup("<b>Gare Saint Lazare</b><br/>Coordinates : (" + e.latlng.lat.toFixed(4) + ", " + e.latlng.lng.toFixed(4) + ")");
+};
+
+/* Fonction qui centre la carte sur la localisation sélectionnée parmi les résultats d'une recherche */
+var centerOnResult = function (e) {
     if (map.hasLayer(pointCenterSearch)) {
         map.removeLayer(pointCenterSearch);
     }
@@ -29,13 +36,7 @@ function centerOnResult(e) {
     };
     pointCenterSearch = L.circleMarker(e.geocode.center, options).addTo(map);
     map.fitBounds(e.geocode.bbox);
-}
-
-/* On initialiser la carte */
-var map = L.map("map", {
-    center: setLatLong(),
-    zoom: 13
-});
+};
 
 /* On ajoute les tuiles qui doivent être affichées sur la carte */
 L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
@@ -62,10 +63,10 @@ var gareSL = L.polygon([
 gareSL.addEventListener("click", onGSLClick);
 
 /* Fonction qui ajoute une popup au clic sur la carte */
-function onMapClick(e) {
+var onMapClick = function (e) {
     var popup = L.popup();
     popup.setLatLng(e.latlng).setContent("You clicked the map at (" + e.latlng.lat.toFixed(4) + ", " + e.latlng.lng.toFixed(4) + ")").openOn(map);
-}
+};
 
 map.addEventListener("click", onMapClick);
 
@@ -81,7 +82,8 @@ var routingModule = L.Routing.control({
     fitSelectedRoutes: false,
     routeWhileDragging: true,
     geocoder: L.Control.Geocoder.nominatim()
-}).addTo(map);
+});
+routingModule.addTo(map);
 
 /* Positionne le centre de la carte grâce au point créé par setLatLong() */
 /*function position() {
