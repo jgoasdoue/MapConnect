@@ -14,7 +14,7 @@ namespace ProjetPersoTest.Controllers
     {
         private static bool isConnected;
 
-        private IDal dal = new Dal();
+        private readonly IDal dal = new Dal();
 
         /**
          * Permet d'afficher la page Index.cshtml si l'utilisateur est connecté, sinon renvoie sur la page de connexion (Connexion.cshtml)

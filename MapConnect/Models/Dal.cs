@@ -7,7 +7,7 @@ namespace ProjetPersoTest.Models
 {
     public class Dal: IDal
     {
-        private ConnInfos infos;
+        private readonly ConnInfos infos;
 
         public Dal()
         {
@@ -27,6 +27,15 @@ namespace ProjetPersoTest.Models
             }
         }
 
+        private SqlDataReader GetDataFromRequest(string request)
+        {
+            OpenDbConn();
+
+            SqlCommand cmd = new SqlCommand(request, infos.Con);
+            SqlDataReader result = cmd.ExecuteReader();
+            return result;
+        }
+
         public SqlDataReader GetLoginInfosDB(string user, string password)
         {
             infos.Login = user;
@@ -34,16 +43,10 @@ namespace ProjetPersoTest.Models
 
             if (infos.Con.ConnectionString == "")
             {
-                throw new Exception(ConfigurationManager.AppSettings["errorNullConnectString"]);
+                throw new InvalidOperationException(ConfigurationManager.AppSettings["errorNullConnectString"]);
             }
-
-            OpenDbConn();
-
-            string request = String.Format(ConfigurationManager.AppSettings["loginRequest"], infos.Login, infos.Password);// "SELECT * FROM Login WHERE [user] = '" + infos.Login + "' AND [pass] = '" + infos.Password + "' ";
-            SqlCommand cmd = new SqlCommand(request, infos.Con);
-            SqlDataReader result = cmd.ExecuteReader();
-
-            return result;
+            string request = String.Format(ConfigurationManager.AppSettings["loginRequest"], infos.Login, infos.Password);
+            return GetDataFromRequest(request);
         }
 
         public SqlDataReader GetNews()
@@ -53,13 +56,8 @@ namespace ProjetPersoTest.Models
                 throw new Exception(ConfigurationManager.AppSettings["errorNullConnectString"]);
             }
 
-            OpenDbConn();
-
             string request = ConfigurationManager.AppSettings["newsRequest"];
-            SqlCommand cmd = new SqlCommand(request, infos.Con);
-            SqlDataReader result = cmd.ExecuteReader();
-
-            return result;
+            return GetDataFromRequest(request);
         }
 
         public SqlDataReader IsUp(string appName)
@@ -69,13 +67,8 @@ namespace ProjetPersoTest.Models
                 throw new Exception(ConfigurationManager.AppSettings["errorNullConnectString"]);
             }
 
-            OpenDbConn();
-
             string request = String.Format(ConfigurationManager.AppSettings["maintenanceRequest"], appName);
-            SqlCommand cmd = new SqlCommand(request, infos.Con);
-            SqlDataReader result = cmd.ExecuteReader();
-
-            return result;
+            return GetDataFromRequest(request);
         }
 
         public void CloseDbConn()
@@ -85,10 +78,11 @@ namespace ProjetPersoTest.Models
                 infos.Con.Close();
             }
 
-            infos.Login = infos.Password = null;
+            infos.Login = null;
+            infos.Password = null;
         }
 
-        public void Dispose()
+        void IDisposable.Dispose()
         {
             infos.Con.Dispose();
             infos.Login = null;
