@@ -53,7 +53,7 @@ namespace ProjetPersoTest.Models
         {
             if (infos.Con.ConnectionString == "")
             {
-                throw new Exception(ConfigurationManager.AppSettings["errorNullConnectString"]);
+                throw new InvalidOperationException(ConfigurationManager.AppSettings["errorNullConnectString"]);
             }
 
             string request = ConfigurationManager.AppSettings["newsRequest"];
@@ -64,7 +64,7 @@ namespace ProjetPersoTest.Models
         {
             if (infos.Con.ConnectionString == "")
             {
-                throw new Exception(ConfigurationManager.AppSettings["errorNullConnectString"]);
+                throw new InvalidOperationException(ConfigurationManager.AppSettings["errorNullConnectString"]);
             }
 
             string request = String.Format(ConfigurationManager.AppSettings["maintenanceRequest"], appName);
