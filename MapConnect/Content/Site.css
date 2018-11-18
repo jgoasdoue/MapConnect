@@ -1,7 +1,6 @@
 ﻿/* Définit le padding du corps de l'application */
 body {
     padding-top: 50px;
-    /*padding-bottom: 20px;*/
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -35,14 +34,20 @@ html, body, #map {
 }
 
 /* Supprime la largeur maximale des conteneurs */
-.container {
+.page-container {
     max-width: 100%;
     max-height: 100%;
+    margin: 6px 0 0 0;
+    padding: 0 10px 0 10px;
 }
 
 /* Mets en place le logo de l'appli */
 #app-icon {
     float: left;
+    max-width: 150px;
+    /*width: 15vw;*/
+    width: 22.5vw;
+    height: auto;
 }
 
 /* Customisation des spinners de coordonnées */
@@ -57,43 +62,80 @@ html, body, #map {
 }*/
 
 /* Définit les espaces entre les labels et les spinners*/
-.ui-spinner{
+.ui-spinner {
     margin-left: 7px;
     margin-right: 14px;
 }
 
+/**/
 #info-div {
     padding: 5px;
     border: 0.5px solid rgba(0, 0, 0, 0.3);
     border-radius: 9px;
 }
 
+/**/
 #news {
     padding: 9px;
 }
 
+/**/
 label {
     width: 150px;
 }
 
+/**/
 .navbar-brand {
+    max-width: 50px;
     padding-top: 7.5px;
+    /*width: 5vw;*/
+    width: 7.5vw;
+    height: auto;
 }
 
+.img-style {
+    max-width: 32px;
+    /*width: 3.2vw;*/
+    width: 4.8vw;
+    height: auto;
+}
+
+/**/
 #maintenance-msg {
     font-size: 17px;
 }
 
+/**/
 .navbar-header {
     width: 100%;
+    height: 7.5vw;
+    max-height: 55px;
 }
 
+/**/
 .topbar-right {
     float: right;
+    max-width: 200px;
+    width: 40vw;
+    margin-right: 10px;
 }
 
+/**/
 .tooltip-custom {
-    background-color:darkgray;
-    height:30px;
-    padding:5px;
+    background-color: darkgray;
+    height: 30px;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.navbar-fixed-top {
+    height: 7.8vw;
+    max-height: 60px;
+    min-height: unset;
+}
+
+.icon-about {
+    width: 44.6vw;
+    min-width: 250px;
+    height: auto;
 }

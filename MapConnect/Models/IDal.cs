@@ -5,10 +5,10 @@ namespace ProjetPersoTest.Models
 {
     interface IDal: IDisposable
     {
-        void OpenDBConn();
+        void OpenDbConn();
         SqlDataReader GetNews();
         SqlDataReader IsUp(string appName);
         SqlDataReader GetLoginInfosDB(string user, string password);
-        void CloseDBConn();
+        void CloseDbConn();
     }
 }
