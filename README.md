@@ -1,7 +1,7 @@
 # MapConnect
 Test project of web application
 
-_This application is still in development (as of February 2nd, 2018)._
+_This application is still in development (as of November 18th, 2018)._
 
 This web app allows the user to connect into his account, access news, view a map and access informations concerning the application.
 
